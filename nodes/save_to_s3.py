@@ -6,7 +6,7 @@ import PIL
 import PIL.Image
 import io
 import logging
-
+import numpy as np
 
 logger = logging.getLogger(__name__)
 
@@ -59,5 +59,9 @@ class SaveImageToS3:
     CATEGORY = "database_ops"
     
     def main(self, database: str, key: str, image: torch.Tensor):
-        store_image(f"{database}/{key}.webp", PIL.Image.fromarray(image.mul(255).byte().permute(1, 2, 0).cpu().numpy()))
+        img_array = image.squeeze(0).cpu().numpy() * 255.0
+        img_pil = PIL.Image.fromarray(np.clip(img_array, 0, 255).astype(np.uint8))
+        print("nump shape", img_array.shape)
+        print("pil shape", img_pil.size)
+        store_image(f"{database}/{key}.webp", img_pil)
         return ()
