@@ -1,0 +1,15 @@
+[project]
+name = "comfyui-tensorops"
+description = "Nodes to perform tensor operations in ComfyUI"
+version = "1.0.0"
+license = "MIT"
+dependencies = ["transformers>=4.38.0"]
+
+[project.urls]
+Repository = "https://github.com/un-seen/comfyui-tensorops"
+#  Used by Comfy Registry https://comfyregistry.org
+
+[tool.comfy]
+PublisherId = "shkr"
+DisplayName = "comfyui-tensorops"
+Icon = ""

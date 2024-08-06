@@ -1,0 +1,4 @@
+tqdm
+numpy
+surrealist
+boto3==1.34.86
