@@ -2,6 +2,7 @@
 from .config import REDIS_URL
 import redis
 import json
+
 class SaveToRedis:
    
     @classmethod    
@@ -46,6 +47,7 @@ class FetchFromRedis:
         if data is None:
             return {}
         else:
-            return json.loads(data.decode('utf-8'))
+            data = json.loads(data)
+            return [data]
         
 

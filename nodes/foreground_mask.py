@@ -169,20 +169,15 @@ class ForegroundMask:
     CATEGORY = "tensorops"
 
     def main(self, image: torch.Tensor, json_data: str):
-        print(json_data)
+        print("items", json_data)
+        items = [item for item in json_data]
         image = image.permute(0, 3, 1, 2)
-        print("Image", image.shape)
-        print("JsonData", json_data, len(json_data))
         image_pil = F.to_pil_image(image[0])
         full_image = Image.new("RGBA", image_pil.size, (0, 0, 0, 255))
-        print("ForegroundMask")
-        print("ImageShape", image.shape)
-        print("OutImageShape", full_image.size)
-        for item in json_data:
+        for item in items:
             points = item["polygon"]
             print("polygon", points)
             masked_image = mask_polygon(image_pil, points)
-            print("NewMaskImageShape", masked_image.size)
             masked_image_crop = crop_polygon(image_pil, points)
             fg_image, fg_color = separate_foreground_background(masked_image_crop)
             x_min, y_min, x_max, y_max = calculate_bounding_box(points)
