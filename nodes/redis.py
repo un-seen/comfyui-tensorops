@@ -9,7 +9,7 @@ class SaveToRedis:
         return {
             "required": {
                 "key": ("STRING", {"multiline": False}),
-                "json": ("JSON",)
+                "data": ("JSON",)
             },
         }
 
