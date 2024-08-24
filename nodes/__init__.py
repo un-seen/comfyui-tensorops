@@ -5,7 +5,7 @@ from .fetch_surreal import FetchJsonFromSurreal
 from .foreground_mask import ForegroundMask
 from .save_to_s3 import SaveImageToS3
 from .redis import SaveToRedis, FetchFromRedis
-from .fal import FalDifferentialDiffusion
+from .fal import FalDifferentialDiffusion, FalDiffusion
 
 NODE_CLASS_MAPPINGS = {
     "ChannelSelector": ChannelSelector,
@@ -18,6 +18,7 @@ NODE_CLASS_MAPPINGS = {
     "SaveToRedis": SaveToRedis,
     "FetchFromRedis": FetchFromRedis,
     "FalDifferentialDiffusion": FalDifferentialDiffusion,
+    "FalDiffusion": FalDiffusion,
 }
 
 # A dictionary that contains the friendly/humanly readable titles for the nodes
@@ -32,4 +33,5 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "SaveToRedis": "SaveToRedis",
     "FetchFromRedis": "FetchFromRedis",
     "FalDifferentialDiffusion": "FalDifferentialDiffusion",
+    "FalDiffusion": "FalDiffusion",
 }
