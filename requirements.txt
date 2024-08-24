@@ -3,3 +3,4 @@ numpy
 surrealist
 boto3==1.34.86
 redis
+fal-client

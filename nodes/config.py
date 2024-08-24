@@ -1,3 +1,4 @@
+import os
 SURREAL_URL = ""
 SURREAL_NAMESPACE = ""
 SURREAL_USER = ""
@@ -8,3 +9,4 @@ DATALAKE_AWS_SECRET_ACCESS_KEY= ""
 DATALAKE_AWS_REGION= ""
 BUCKET = ""
 REDIS_URL = ""
+os.environ["FAL_KEY"] = ""
