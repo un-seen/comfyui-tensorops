@@ -11,11 +11,8 @@ def get_background_mask(tensor: torch.Tensor):
     Returns:
         List of masks as torch.Tensor and the background mask as torch.Tensor.
     """
-    B, H, W, _ = tensor.shape
+    B, H, W = tensor.shape
 
-    # Squeeze the last dimension since it's always 1
-    tensor = tensor.squeeze(-1)
-    
     # Compute areas of each mask
     areas = tensor.sum(dim=(1, 2))  # Shape: (B,)
     
@@ -47,8 +44,6 @@ def get_background_mask(tensor: torch.Tensor):
                     break
     
     # Reshape the masks to match the original tensor shape
-    background_mask = background_mask.unsqueeze(-1)
-
     return background_mask
 
 class BackgroundSelect:

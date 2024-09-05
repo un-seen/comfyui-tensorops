@@ -58,10 +58,13 @@ class SaveImageToS3:
     OUTPUT_NODE = True
     CATEGORY = "database_ops"
     
-    def main(self, database: str, key: str, image: torch.Tensor):
-        img_array = image.squeeze(0).cpu().numpy() * 255.0
-        img_pil = PIL.Image.fromarray(np.clip(img_array, 0, 255).astype(np.uint8))
-        final_key = f"{database}/{key}.webp"
-        print("final_key", final_key)
-        store_image(final_key, img_pil)
+    def main(self, database: str, key: str, tensor: torch.Tensor):
+        B, _, _ = tensor.shape
+        for i in range(B):    
+            image = tensor[i]
+            img_array = image.squeeze(0).cpu().numpy() * 255.0
+            img_pil = PIL.Image.fromarray(np.clip(img_array, 0, 255).astype(np.uint8))
+            final_key = f"{database}/{key}-{i}.webp"
+            print("final_key", final_key)
+            store_image(final_key, img_pil)
         return ()
