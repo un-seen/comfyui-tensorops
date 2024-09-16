@@ -8,6 +8,7 @@ from .redis import SaveToRedis, FetchFromRedis
 from .fal import FalDifferentialDiffusion, FalDiffusion
 from .background_select import BackgroundSelect
 from .layer_mask import GetLayerMask
+from .stream import SendImageOnWebSocket, SendJsonOnWebSocket
 
 NODE_CLASS_MAPPINGS = {
     "ChannelSelector": ChannelSelector,
@@ -23,6 +24,8 @@ NODE_CLASS_MAPPINGS = {
     "FalDiffusion": FalDiffusion,
     "BackgroundSelect": BackgroundSelect,
     "GetLayerMask": GetLayerMask,
+    "SendImageOnWebSocket": SendImageOnWebSocket,
+    "SendJsonOnWebSocket": SendJsonOnWebSocket,
 }
 
 # A dictionary that contains the friendly/humanly readable titles for the nodes
@@ -40,4 +43,6 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "FalDiffusion": "FalDiffusion",
     "BackgroundSelect": "BackgroundSelect",
     "GetLayerMask": "GetLayerMask",
+    "SendImageOnWebSocket": "SendImageOnWebSocket",
+    "SendJsonOnWebSocket": "SendJsonOnWebSocket",
 }

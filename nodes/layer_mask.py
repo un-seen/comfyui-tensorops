@@ -1,9 +1,7 @@
-
 import PIL
 from typing import List
 import numpy as np
 import torchvision.transforms.functional as F
-import json
 import torch
 
 def multiply_grayscale_images(image1, image2):
@@ -54,12 +52,12 @@ def create_color_masks(image: PIL.Image.Image):
             continue
         mask_image = PIL.Image.fromarray(mask.astype(np.uint8) * 255)
         elements.append((color_str, mask_image))
-    # Final Background 
+    # Final Background
     final_background_mask_image = PIL.Image.new("L", (image.size[0], image.size[1]), 255)
     draw = PIL.ImageDraw.Draw(final_background_mask_image)
     for idx, (color_str, mask_image) in enumerate(elements):
         final_background_mask_image = multiply_grayscale_images(final_background_mask_image, PIL.ImageOps.invert(mask_image))
-            
+
     return final_background_mask_image, elements
 
 
@@ -82,7 +80,7 @@ def create_text_masks(polygons, width, height):
     return text_masks
 
 class GetLayerMask:
-   
+
     @classmethod
     def INPUT_TYPES(s):
         return {
@@ -110,14 +108,24 @@ class GetLayerMask:
         text_polygon_list = []
         text_label_list = []
         text_masks = []
+
         for item in items:
             text_polygon_list.append(item["polygon"])
-            text_label_list.append(item["label"])        
-        for mask_image in create_text_masks(text_polygon_list, bg.size[0], bg.size[1]):
-            text_masks.append(F.to_tensor(mask_image))
-        output = []
-        output.append(F.to_tensor(bg))
-        for _, mask_image in elements:
-            output.append(F.to_tensor(mask_image))
-        return (output, text_masks, text_label_list)
+            text_label_list.append(item["label"])
 
+        for mask_image in create_text_masks(text_polygon_list, bg.size[0], bg.size[1]):
+            img = np.array(mask_image).astype(np.float32) / 255.0
+            img = torch.from_numpy(img)
+            print(img.shape)
+            text_masks.append(img)
+
+        output = []
+        bg = np.array(bg).astype(np.float32) / 255.0
+        bg = torch.from_numpy(bg)
+        output.append(bg)
+        for _, mask_image in elements:
+            img = np.array(mask_image).astype(np.float32) / 255.0
+            img = torch.from_numpy(img)
+            print(img.shape)
+            output.append(img)
+        return (torch.cat(output, dim=0), torch.cat(text_masks, dim=0), text_label_list)
