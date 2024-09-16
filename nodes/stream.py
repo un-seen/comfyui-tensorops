@@ -39,7 +39,7 @@ class SendJsonOnWebSocket:
     def send_json(self, event, json):
         server = PromptServer.instance
         server.send_sync(
-            "status",
+            event,
             json,
             server.client_id,
         )
