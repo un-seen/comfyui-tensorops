@@ -23,6 +23,7 @@ class SaveToRedis:
     def main(self, key: str, data: dict):
         connection = redis.Redis.from_url(REDIS_URL)
         connection.set(key, json.dumps(data))
+        connection.close()
         return ()
 
 class FetchFromRedis:
@@ -50,4 +51,3 @@ class FetchFromRedis:
             data = json.loads(data)
             return [data]
         
-

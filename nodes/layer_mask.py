@@ -115,17 +115,15 @@ class GetLayerMask:
 
         for mask_image in create_text_masks(text_polygon_list, bg.size[0], bg.size[1]):
             img = np.array(mask_image).astype(np.float32) / 255.0
-            img = torch.from_numpy(img)
-            print(img.shape)
+            img = torch.from_numpy(img)[None,]
             text_masks.append(img)
 
         output = []
         bg = np.array(bg).astype(np.float32) / 255.0
-        bg = torch.from_numpy(bg)
+        bg = torch.from_numpy(bg)[None,]
         output.append(bg)
         for _, mask_image in elements:
             img = np.array(mask_image).astype(np.float32) / 255.0
-            img = torch.from_numpy(img)
-            print(img.shape)
+            img = torch.from_numpy(img)[None,]
             output.append(img)
         return (torch.cat(output, dim=0), torch.cat(text_masks, dim=0), text_label_list)

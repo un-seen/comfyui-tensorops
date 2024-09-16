@@ -6,7 +6,7 @@ from server import PromptServer, BinaryEventTypes
 class SendImageOnWebSocket:
     @classmethod
     def INPUT_TYPES(s):
-        return {"required": {"event": "STRING", "images": ("IMAGE",)}}
+        return {"required": {"event": ("STRING", {"multiline": False}), "images": ("IMAGE",)}}
 
     RETURN_TYPES = ()
     FUNCTION = "send_images"
@@ -20,7 +20,7 @@ class SendImageOnWebSocket:
             server = PromptServer.instance
             server.send_sync(
                 BinaryEventTypes.UNENCODED_PREVIEW_IMAGE,
-                [f"{event}_PNG", image, None],
+                [f"PNG", image, event],
                 server.client_id,
             )
         return ()
@@ -29,17 +29,17 @@ class SendImageOnWebSocket:
 class SendJsonOnWebSocket:
     @classmethod
     def INPUT_TYPES(s):
-        return {"required": {"event": "STRING", "json": ("JSON",)}}
+        return {"required": {"event": ("STRING", {"multiline": False}), "json": ("JSON",)}}
 
     RETURN_TYPES = ()
     FUNCTION = "send_json"
     OUTPUT_NODE = True
     CATEGORY = "tensorops"
 
-    def send_images(self, event, json):
+    def send_json(self, event, json):
         server = PromptServer.instance
         server.send_sync(
-            event,
+            "status",
             json,
             server.client_id,
         )
