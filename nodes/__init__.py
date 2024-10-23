@@ -9,6 +9,7 @@ from .fal import FalDifferentialDiffusion, FalDiffusion
 from .background_select import BackgroundSelect
 from .layer_mask import GetLayerMask
 from .stream import SendImageOnWebSocket, SendJsonOnWebSocket
+from .separate_mask import SeparateMask
 
 NODE_CLASS_MAPPINGS = {
     "ChannelSelector": ChannelSelector,
@@ -26,6 +27,7 @@ NODE_CLASS_MAPPINGS = {
     "GetLayerMask": GetLayerMask,
     "SendImageOnWebSocket": SendImageOnWebSocket,
     "SendJsonOnWebSocket": SendJsonOnWebSocket,
+    "SeparateMask": SeparateMask
 }
 
 # A dictionary that contains the friendly/humanly readable titles for the nodes
@@ -45,4 +47,5 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "GetLayerMask": "GetLayerMask",
     "SendImageOnWebSocket": "SendImageOnWebSocket",
     "SendJsonOnWebSocket": "SendJsonOnWebSocket",
+    "SeparateMask": "SeparateMask"
 }
