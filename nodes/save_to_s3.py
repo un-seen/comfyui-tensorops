@@ -26,7 +26,7 @@ def init_s3():
             aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
             config=Config(signature_version="s3v4"),
         )
-       
+
 def store_image(key: str, image: PIL.Image.Image):
     global S3_RESOURCE
     init_s3()
@@ -39,10 +39,10 @@ def store_image(key: str, image: PIL.Image.Image):
         s3_bucket.put_object(Key=key, Body=file_content)
     except Exception as e:
         logger.error(f"StoreContentError {key}: {e}")
-         
+
 class SaveImageToS3:
-   
-    @classmethod    
+
+    @classmethod
     def INPUT_TYPES(s):
         return {
             "required": {
@@ -57,11 +57,11 @@ class SaveImageToS3:
     FUNCTION = "main"
     OUTPUT_NODE = True
     CATEGORY = "database_ops"
-    
-    def main(self, database: str, key: str, tensor: torch.Tensor):
-        B = tensor.shape[0]
+
+    def main(self, database: str, key: str, image: torch.Tensor):
+        B = image.shape[0]
         for i in range(B):
-            im = tensor[i]
+            im = image[i]
             img_array = im.squeeze(0).cpu().numpy() * 255.0
             img_pil = PIL.Image.fromarray(np.clip(img_array, 0, 255).astype(np.uint8))
             if i > 0:
